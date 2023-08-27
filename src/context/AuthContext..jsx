@@ -22,6 +22,9 @@ export const AuthContextProvider = ({ children }) => {
   // Create an instance of the Google provider object:
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
     signInWithPopup(auth, provider);
   };
 
@@ -34,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("User", currentUser);
+      console.log("user", currentUser);
     });
     return () => {
       unsubscribe();
