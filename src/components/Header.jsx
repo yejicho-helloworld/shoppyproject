@@ -65,7 +65,7 @@ export default function Header() {
       <nav className="p-4 flex justify-between items-center">
         <Link
           to="/"
-          className="flex items-center text-pink-600/70 font-bold text-4xl"
+          className="flex items-center text-pink-600/70 text-4xl"
         >
           <FiShoppingBag />
           Shoppy
@@ -91,9 +91,10 @@ export default function Header() {
                 alt={`${user.displayName}'s Avatar`}
                 className="rounded-full h-10 w-10 object-cover"
               />
+              <span className="ml-2 font-bold">{user.displayName}</span>
               <button
                 onClick={handleSignOut}
-                className="text-black ml-2 font-bold"
+                className="text-black ml-5 font-bold"
               >
                 Logout
               </button>
