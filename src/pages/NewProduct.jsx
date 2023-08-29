@@ -6,25 +6,28 @@ import axios from "axios";
 export default function NewProducts() {
   const preset_key = "uploadimage";
   const cloud_name = "shoppyimage";
-  const [productImage, setProductImage] = useState(null);
-  const [productName, setProductName] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productCategory, setProductCategory] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
+  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  // 배열 형태로 useState안에 []로 초기화해준다.
+  // options를 객체형태로 구성하고, 선택한 사이즈마다 순차적인 키를 할당하여 저장!
+  // setOptions라는 배열 상태를 사용하여 사용자가 입력한 사이즈 옵션을 저장함.
+  const [options, setOptions] = useState([]);
 
   // 이 함수는 사용자가 선택한 이미지 파일을 productImage 상태에 저장하여 미리보기하거나
   // 나중에 서버로 전송하는 역할을 함.
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
-    setProductImage(imageFile);
+    setImage(imageFile);
 
     // FormData 생성 및 업로드 프리셋 설정
+    // 위에서 선언한 변수를 append의 두번째 인자로 넣어줘야한다!
     const formData = new FormData();
-    formData.append("file", imageFile); // 올바른 파일 변수를 사용하세요
-    formData.append("upload_preset", preset_key); // preset_key로 수정
+    formData.append("file", imageFile);
+    formData.append("upload_preset", preset_key);
     formData.append("cloud_name", cloud_name);
- 
 
     axios
       .post(
@@ -32,7 +35,7 @@ export default function NewProducts() {
         formData
       )
       .then((res) => {
-        setProductImage(res.data.secure_url);
+        setImage(res.data.secure_url);
         console.log(res);
       })
       .catch((err) => {
@@ -44,12 +47,12 @@ export default function NewProducts() {
     event.preventDefault();
 
     const productData = {
-      productName,
-      productPrice,
-      productCategory,
-      productDescription,
-      selectedSize,
-      productImage: productImage || "",
+      title,
+      price,
+      category,
+      description,
+      options,
+      image: image || "",
     };
 
     // Firebase에 데이터 저장
@@ -58,12 +61,13 @@ export default function NewProducts() {
       await push(productsRef, productData);
 
       // 폼 데이터 초기화
-      setProductImage(null);
-      setProductName("");
-      setProductPrice("");
-      setProductCategory("");
-      setProductDescription("");
-      setSelectedSize("");
+      setImage(null);
+      setTitle("");
+      setPrice("");
+      setCategory("");
+      setDescription("");
+      // 배열로 초기화
+      setOptions([]);
 
       console.log("데이터가 Firebase 데이터베이스에 저장되었습니다.");
     } catch (error) {
@@ -79,10 +83,10 @@ export default function NewProducts() {
       {/* productImgage 상태가 존재할 때에만 아래의 내용이 렌더링되도록하는 조건부 렌더링
       <img...> 업로드한 이미지를 미리보기하는 img 요소임. 'src'속성을 통해 업로드한 이미지의
       url을 설정하고, 'alt'속성을 통해 대체 텍스트를 지정함.*/}
-      {productImage && (
+      {image && (
         <img
           // src={URL.createObjectURL(productImage)}
-          src={productImage}
+          src={image}
           alt="Product Preview"
           className="w-4/5 h-auto mx-auto mb-5"
         />
@@ -97,7 +101,7 @@ export default function NewProducts() {
   상태에 저장됨. */}
           <input
             type="file"
-            id="productImage"
+            id="image"
             accept="image/*"
             onChange={handleImageChange}
             required
@@ -110,8 +114,8 @@ export default function NewProducts() {
             placeholder="제품명"
             type="text"
             id="productName"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
             className="border border-gray-300 rounded h-[4rem] w-4/5 px-5 mb-5 outline-none"
           />
@@ -122,8 +126,8 @@ export default function NewProducts() {
             placeholder="가격"
             type="text"
             id="productPrice"
-            value={productPrice}
-            onChange={(e) => setProductPrice(e.target.value)}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
             className="border border-gray-300 rounded h-[4rem] w-4/5 px-5 mb-5 outline-none"
             required
           />
@@ -134,8 +138,8 @@ export default function NewProducts() {
             placeholder="카테고리"
             type="text"
             id="productCategory"
-            value={productCategory}
-            onChange={(e) => setProductCategory(e.target.value)}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             required
             className="border border-gray-300 rounded h-[4rem] w-4/5 px-5 mb-5 outline-none"
           />
@@ -146,20 +150,24 @@ export default function NewProducts() {
             placeholder="제품 설명"
             type="text"
             id="productCategory"
-            value={productDescription}
-            onChange={(e) => setProductDescription(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
             className="border border-gray-300 rounded h-[4rem] w-4/5 px-5 mb-5 outline-none"
           />
         </div>
 
         <div className="flex justify-center ml-50 mr-50">
+          {/* setOptions라는 배열 상태를 사용하여 사용자가 입력한 사이즈 옵션을 저장
+          사용자가 입력한 옵션들을 쉼표로 구분된 문자열로 표시하고, 이 문자열을 배열로 변환하여
+          SetOptions에서 저장. 
+          => 이렇세 함으로써 데이터베이스에 선택한 사이즈 옵션을 배열 형태로 저장할 수 있음 */}
           <input
             placeholder="옵션들(콤마(,)로 구분)"
             type="text"
             id="selectedSize"
-            value={selectedSize}
-            onChange={(e) => setSelectedSize(e.target.value)}
+            value={options.join(", ")}
+            onChange={(e) => setOptions(e.target.value.split(", "))}
             required
             className="border border-gray-300 rounded h-[4rem] w-4/5 px-5 mb-5 outline-none"
           />
