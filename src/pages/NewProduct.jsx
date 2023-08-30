@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getDatabase, ref, push } from "firebase/database";
 import { auth, database } from "../firebase"; // 위에서 export한 firebase 인스턴스를 import
 import axios from "axios";
@@ -15,6 +15,19 @@ export default function NewProducts() {
   // options를 객체형태로 구성하고, 선택한 사이즈마다 순차적인 키를 할당하여 저장!
   // setOptions라는 배열 상태를 사용하여 사용자가 입력한 사이즈 옵션을 저장함.
   const [options, setOptions] = useState([]);
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  useEffect(() => {
+    if (uploadSuccess) {
+      const timer = setTimeout(() => {
+        setUploadSuccess(false); // 4초 후에 성공 메시지 숨기기
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [uploadSuccess]);
 
   // 이 함수는 사용자가 선택한 이미지 파일을 productImage 상태에 저장하여 미리보기하거나
   // 나중에 서버로 전송하는 역할을 함.
@@ -46,6 +59,9 @@ export default function NewProducts() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // 업로딩 상태 설정
+    setIsUploading(true);
+
     const productData = {
       title,
       price,
@@ -69,9 +85,15 @@ export default function NewProducts() {
       // 배열로 초기화
       setOptions([]);
 
+      // 성공 상태 설정
+      setUploadSuccess(true);
+
       console.log("데이터가 Firebase 데이터베이스에 저장되었습니다.");
     } catch (error) {
       console.error("데이터 저장 중 오류 발생:", error);
+    } finally {
+      // 업로딩 상태 리셋
+      setIsUploading(false);
     }
   };
 
@@ -91,6 +113,14 @@ export default function NewProducts() {
           className="w-4/5 h-auto mx-auto mb-5"
         />
       )}
+
+      {/* 업로드 상태 표시 */}
+      {isUploading && <p className="text-blue-500">업로딩 중...</p>}
+      <div className="flex justify-center ml-50 mr-50">
+        {uploadSuccess && (
+          <p className="text-black"> ✅제품이 성공적으로 추가되었습니다!</p>
+        )}
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="flex justify-center ml-50 mr-50">
           {/* 사용자가 이미지 파일을 선택하면 input 요소의 onChange 이벤트가 발생함. 
@@ -177,8 +207,9 @@ export default function NewProducts() {
           <button
             type="submit"
             className="font-bold bg-pink-300 text-white rounded h-[3rem] w-4/5 px-5 mt-1 mb-10"
+            disabled={isUploading} // 업로드 중일 때 버튼 비활성화
           >
-            제품 등록하기
+            {isUploading ? "업로딩 중..." : "제품 등록하기"}
           </button>
         </div>
       </form>
