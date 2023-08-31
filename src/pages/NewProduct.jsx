@@ -11,9 +11,6 @@ export default function NewProducts() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  // 배열 형태로 useState안에 []로 초기화해준다.
-  // options를 객체형태로 구성하고, 선택한 사이즈마다 순차적인 키를 할당하여 저장!
-  // setOptions라는 배열 상태를 사용하여 사용자가 입력한 사이즈 옵션을 저장함.
   const [options, setOptions] = useState([]);
 
   const [isUploading, setIsUploading] = useState(false);
@@ -22,7 +19,7 @@ export default function NewProducts() {
   useEffect(() => {
     if (uploadSuccess) {
       const timer = setTimeout(() => {
-        setUploadSuccess(false); // 4초 후에 성공 메시지 숨기기
+        setUploadSuccess(false); 
       }, 4000);
 
       return () => clearTimeout(timer);
@@ -94,6 +91,7 @@ export default function NewProducts() {
     } finally {
       // 업로딩 상태 리셋
       setIsUploading(false);
+      setImage(null);
     }
   };
 
@@ -116,9 +114,9 @@ export default function NewProducts() {
 
       {/* 업로드 상태 표시 */}
       {isUploading && <p className="text-blue-500">업로딩 중...</p>}
-      <div className="flex justify-center ml-50 mr-50">
+      <div className="flex justify-center ml-50 mr-50 mb-5">
         {uploadSuccess && (
-          <p className="text-black"> ✅제품이 성공적으로 추가되었습니다!</p>
+          <p className="text-black"> ✅ 제품이 성공적으로 추가되었습니다!</p>
         )}
       </div>
       <form onSubmit={handleSubmit}>
@@ -154,7 +152,7 @@ export default function NewProducts() {
         <div className="flex justify-center ml-50 mr-50">
           <input
             placeholder="가격"
-            type="text"
+            type="number"
             id="productPrice"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -188,10 +186,6 @@ export default function NewProducts() {
         </div>
 
         <div className="flex justify-center ml-50 mr-50">
-          {/* setOptions라는 배열 상태를 사용하여 사용자가 입력한 사이즈 옵션을 저장
-          사용자가 입력한 옵션들을 쉼표로 구분된 문자열로 표시하고, 이 문자열을 배열로 변환하여
-          SetOptions에서 저장. 
-          => 이렇세 함으로써 데이터베이스에 선택한 사이즈 옵션을 배열 형태로 저장할 수 있음 */}
           <input
             placeholder="옵션들(콤마(,)로 구분)"
             type="text"
