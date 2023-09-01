@@ -25,3 +25,5 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 // 우리는 firebase의 로직을 사용하지 않을 것이기 때문에 export해줘야함.
 export const database = getDatabase(app); // 추가
+const productsRef = ref(database, "products"); // "products" 경로의 참조를 가져옵니다.
+const snapshot = await get(productsRef); // 데이터를 가져옵니다.

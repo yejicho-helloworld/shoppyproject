@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { UserAuth } from "../context/AuthContext.";
-import { database } from "../firebase";
-import { getDatabase, get, ref, child } from "firebase/database";
-import { ref as sRef } from "firebase/storage";
-import { getAuth } from "firebase/auth";
+import { getDatabase, get, ref} from "firebase/database";
 
 export default function Header() {
   const { googleSignIn } = UserAuth();
