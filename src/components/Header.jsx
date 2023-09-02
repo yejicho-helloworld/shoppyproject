@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { UserAuth } from "../context/AuthContext.";
-import { getDatabase, get, ref} from "firebase/database";
+import { getDatabase, get, ref } from "firebase/database";
 
 export default function Header() {
   const { googleSignIn } = UserAuth();
@@ -27,7 +27,7 @@ export default function Header() {
 
   const [isAdmin, setIsAdmin] = useState(false);
   // useEffect훅이 로그인한 사용자의 uid가 admins 데이터베이스에 있는지
-  // 확인하고, 그 결과를 isAdmin 상태 변수에 저장함. 
+  // 확인하고, 그 결과를 isAdmin 상태 변수에 저장함.
   useEffect(() => {
     const checkAdmin = async () => {
       if (!user) return;
@@ -35,7 +35,7 @@ export default function Header() {
 
       // firebase realtime database 인스턴스 생성
       const database = getDatabase();
-      // admin 경로를 참조하는 데이터베이스 참조를 생성함. 
+      // admin 경로를 참조하는 데이터베이스 참조를 생성함.
       const adminRef = ref(database, "admins");
       console.log(adminRef);
       // 데이터베이스 참조로부터 데이터를 읽어오는 get 함수를 호출하고,
@@ -46,7 +46,7 @@ export default function Header() {
         const adminData = snapshot.val();
         console.log(adminData);
         // adminData객체의 값을 배열로 변환한 후, 현재 사용자의 uid가 그 배열에
-        // 포함되어있는지를 확인하여 어드민 여부를 결정함. 
+        // 포함되어있는지를 확인하여 어드민 여부를 결정함.
         const isAdminUser = Object.values(adminData).includes(user.uid);
         // 어드민 여부를 isAdmin 상태 변수에 설정
         setIsAdmin(isAdminUser);
@@ -60,10 +60,7 @@ export default function Header() {
   return (
     <div>
       <nav className="p-4 flex justify-between items-center">
-        <Link
-          to="/"
-          className="flex items-center text-pink-600/70 text-4xl"
-        >
+        <Link to="/" className="flex items-center text-pink-600/70 text-4xl">
           <FiShoppingBag />
           Shoppy
         </Link>
@@ -91,14 +88,14 @@ export default function Header() {
               <span className="ml-2 font-bold">{user.displayName}</span>
               <button
                 onClick={handleSignOut}
-                className="text-black ml-5 font-bold"
+                className="bg-pink-400 text-white py-2 px-4 rounded-sm hover:brightness-110 ml-3"
               >
                 Logout
               </button>
             </div>
           ) : (
             <button
-              className="text-black ml-4 font-bold"
+              className="bg-pink-400 text-white py-2 px-4 rounded-sm hover:brightness-110 ml-3"
               onClick={handleGoogleSignIn}
             >
               Login

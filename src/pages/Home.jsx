@@ -10,7 +10,7 @@ export default function Home() {
         <img
           src={shoppyImage} // 이미지 파일의 변수를 사용합니다.
           alt="배너 이미지"
-          className="w-full h-[37rem]" // 배너 이미지가 화면 전체 너비를 차지하도록 설정
+          className="w-full h-[33rem]" // 배너 이미지가 화면 전체 너비를 차지하도록 설정
         />
         {/* 텍스트 */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl text-center">
