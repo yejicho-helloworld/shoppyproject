@@ -10,7 +10,8 @@ export default function ProductCard({ product }) {
   };
   return (
     <div
-      className="bg-white rounded-lg shadow-md p-4 m-2 cursor-pointer"
+      className="bg-white rounded-lg shadow-md p-4 m-2 cursor-pointer
+hover:bg-gray-100 hover:shadow-lg transform transition-transform hover:-translate-y-2"
       onClick={handleProductClick}
     >
       <img src={product.image} alt={product.title} className="object-cover" />
