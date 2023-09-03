@@ -29,7 +29,7 @@ export default function AllProducts() {
   return (
     <div className="flex">
       {/* 각 카드를 수평으로 배열하기 위해 flex 클래스 추가 */}
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {/* 각 카드를 수평으로 배열하려면 grid-cols-3을 사용 */}
         {Object.keys(products).map((productId) => {
           const product = products[productId];
