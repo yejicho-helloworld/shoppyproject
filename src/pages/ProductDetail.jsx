@@ -57,7 +57,7 @@ export default function ProductDetail() {
     justify-center items-center"
     >
       {product ? (
-        <div className="grid grid-cols-2">
+        <div className="flex flex-col md:flex-row">
           <div>
             <img
               src={product.image}
