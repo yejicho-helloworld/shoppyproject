@@ -35,6 +35,11 @@ export default function ProductDetail() {
     fetchProduct();
   }, [id]);
 
+  const [selected, setSelected] = useState(
+    product && product.options && product.options[0]
+  );
+  const handleSelect = (e) => setSelected(e.target.value);
+
   const handleAddToCart = () => {
     // 장바구니에 제품을 추가하는 로직을 구현
     // 이 부분은 상태 관리나 데이터베이스 연동이 필요
@@ -76,14 +81,18 @@ export default function ProductDetail() {
               </label>
               <select
                 id="options"
-                className="border rounded-md p-2 mt-1 focus:outline-none"
+                className="border-dashed rounded-md p-2 mt-1 focus:outline-none"
                 style={{ width: "100%" }}
+                onChange={handleSelect}
+                value={selected}
               >
-                {product.options.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
+                {product.options
+                  ? product.options.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))
+                  : null}
               </select>
             </div>
 
