@@ -4,6 +4,8 @@ import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { UserAuth } from "../context/AuthContext.";
 import { getDatabase, get, ref } from "firebase/database";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import CartIcon from "./CartIcon";
 
 export default function Header() {
   const { googleSignIn } = UserAuth();
@@ -65,12 +67,12 @@ export default function Header() {
           Shoppy
         </Link>
         <div className="flex items-center text-xl">
-          <Link to="/products" className="text-black font-bold mr-4">
+          <Link to="/products" className="text-black font-bold mr-5">
             Products
           </Link>
           {user && (
-            <Link to="/carts" className="text-black font-bold mr-4">
-              Carts
+            <Link to="/carts" className="mr-5">
+              <CartIcon />
             </Link>
           )}
           {isAdmin && user && (
@@ -79,7 +81,7 @@ export default function Header() {
             </Link>
           )}
           {user?.displayName ? (
-            <div className="flex items-center ml-4">
+            <div className="flex items-center ml-5">
               <img
                 src={user.photoURL}
                 alt={`${user.displayName}'s Avatar`}
@@ -88,7 +90,7 @@ export default function Header() {
               <span className="ml-2 font-bold">{user.displayName}</span>
               <button
                 onClick={handleSignOut}
-                className="bg-pink-400 text-white py-2 px-4 rounded-sm hover:brightness-110 ml-3"
+                className="bg-pink-400 text-white py-2 px-4 rounded-sm hover:brightness-110 ml-5"
               >
                 Logout
               </button>
