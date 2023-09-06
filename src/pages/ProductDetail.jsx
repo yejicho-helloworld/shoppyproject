@@ -1,4 +1,4 @@
-import { get, ref } from "firebase/database";
+import { get, push, ref } from "firebase/database";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { database } from "../firebase";
@@ -40,11 +40,29 @@ export default function ProductDetail() {
   );
   const handleSelect = (e) => setSelected(e.target.value);
 
-  const handleAddToCart = () => {
-    // 장바구니에 제품을 추가하는 로직을 구현
-    // 이 부분은 상태 관리나 데이터베이스 연동이 필요
-    // 예를 들어 firebase firestore를 사용하여 장바구니에 추가할 수 있음.
-    // 필요햔 상태나 함수를 추가하여 구현
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    try {
+      const productRef = ref(database, `products/${id}`);
+      const snapshot = await get(productRef);
+
+      // snapshot.exists()를 사용하여 제품 정보가 존재하는지 확인하고, 존재하면
+      // setProduct 함수를 사용하여 product 상태에 저장함.
+      if (snapshot.exists()) {
+        setProduct(snapshot.val());
+      } else {
+        console.log("제품을 찾을 수 없습니다");
+      }
+      //firebase 데이터베이스의 carts 경로에 대한 참조를 생성
+      // 이 참조를 통해 carts에 저장할 것이라고 위치를 지정
+      const cartRef = ref(database, "carts");
+      // firebase의 push 함수를 사용하여 장바구니에 추가한 제품을 데이터베이스에 추가
+      // push 함수는 제품 정보 객체를 'carts'경로에 추가함.
+      await push(cartRef, product);
+      
+    } catch (error) {
+      console.log("에러가 발생하였습니다");
+    }
   };
 
   return (
@@ -57,7 +75,7 @@ export default function ProductDetail() {
     justify-center items-center"
     >
       {product ? (
-        <div className="flex flex-col md:flex-row">
+        <div className="grid grid-cols-2">
           <div>
             <img
               src={product.image}
