@@ -1,6 +1,12 @@
 ## 리액트로 진행하고 있는 쇼핑몰 프로젝트입니다. 
-Firebase Authentication 기능, Firebase Realtime Database 이용
+
+
+### Firebase Authentication 기능, Firebase Realtime Database 이용 
 <img width="1080" alt="image" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/d5970f1a-8b28-4e76-b0de-e78dc636713b">
+
+### Cloudinary 이용
+제품의 이미지를 클라우드로 업로드하고 저장함.
+<img width="1291" alt="스크린샷 2023-09-08 오후 8 18 24" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/daddb1c2-bb47-4b3e-ba25-e84cb90462ba">
 
 
 ## 메인페이지
