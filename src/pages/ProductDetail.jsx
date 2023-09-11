@@ -1,30 +1,30 @@
-import { get, push, ref } from "firebase/database";
+import { get, push, ref, set } from "firebase/database";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { database } from "../firebase";
 
 export default function ProductDetail() {
-  // useParams를 사용하여 동적 파라미터로부터 id를 추출함.
-  // 동적 파라미터는 URL에서 '/products/:id" 형식으로 정의된 부분을 말하며,
-  // 이를 통해 제품의 고유 ID를 추출할 수 있음.
   const { id } = useParams();
-  // product 상태를 초기화함.
   const [product, setProduct] = useState(null);
+  // const [selected, setSelected] = useState(
+  //   product && product.options && product.options[0]
+  // );
+  const [selected, setSelected] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  // useEffect를 사용하여 fetchProduct 함수 컴포넌트가 처음 마운트될 때 호출되도록 함.
-  // fetchProduct 함수는 데이터베이스에서 제품 정보를 가져오는 비동기 함수
-  // productRef를 사용하여 해당 'id'에 해당하는 제품 정보를 참조함.
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // firebase 데이터베이스에서 제품 정보를 가져옴.
         const productRef = ref(database, `products/${id}`);
         const snapshot = await get(productRef);
 
-        // snapshot.exists()를 사용하여 제품 정보가 존재하는지 확인하고, 존재하면
-        // setProduct 함수를 사용하여 product 상태에 저장함.
         if (snapshot.exists()) {
           setProduct(snapshot.val());
+
+          // 제품 정보를 가져온 후에 기본 옵션을 설정
+          if (snapshot.val().options && snapshot.val().options.length > 0) {
+            setSelected(snapshot.val().options[0]);
+          }
         } else {
           console.log("제품을 찾을 수 없습니다");
         }
@@ -35,33 +35,70 @@ export default function ProductDetail() {
     fetchProduct();
   }, [id]);
 
-  const [selected, setSelected] = useState(
-    product && product.options && product.options[0]
-  );
   const handleSelect = (e) => setSelected(e.target.value);
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
     try {
-      const productRef = ref(database, `products/${id}`);
-      const snapshot = await get(productRef);
+      if (product) {
+        const productRef = ref(database, `products/${id}`);
+        const snapshot = await get(productRef);
 
-      // snapshot.exists()를 사용하여 제품 정보가 존재하는지 확인하고, 존재하면
-      // setProduct 함수를 사용하여 product 상태에 저장함.
-      if (snapshot.exists()) {
-        setProduct(snapshot.val());
-      } else {
-        console.log("제품을 찾을 수 없습니다");
+        if (snapshot.exists()) {
+          setProduct(snapshot.val());
+        } else {
+          console.log("제품을 찾을 수 없습니다");
+        }
+
+        // 사용자가 옵션을 선택하지 않은 경우, selected를 첫 번째 옵션으로 설정
+        // if (!selected && product.options && product.options.length > 0) {
+        //   setSelected(product.options[0]);
+        // }
+
+        const cartRef = ref(database, "carts");
+        const cartSnapshot = await get(cartRef);
+
+        const selectedOption = selected; //선택한 옵션을 저장
+
+        // 객체를 통해 추가할 정보들을 저장해서 만든다.
+        const productToAdd = {
+          ...product,
+          quantity: 1,
+          selectedOption: selectedOption, //선택한 옵션을 추가
+        };
+
+        if (cartSnapshot.exists()) {
+          const cartData = cartSnapshot.val();
+          let found = false;
+
+          for (const key in cartData) {
+            if (
+              cartData[key].id === productToAdd.id &&
+              // 같은 제품 및 옵션 확인
+              cartData[key].selectedOption === selectedOption
+            ) {
+              found = true;
+              cartData[key].quantity += 1;
+              await set(ref(database, `carts/${key}`), cartData[key]);
+              break;
+            }
+          }
+
+          if (!found) {
+            const newCartRef = push(cartRef);
+            await set(newCartRef, productToAdd);
+          }
+        } else {
+          const newCartRef = push(cartRef);
+          await set(newCartRef, productToAdd);
+        }
+        setSuccessMessage("✅장바구니에 추가되었습니다");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000); // 3초 후에 숨김
       }
-      //firebase 데이터베이스의 carts 경로에 대한 참조를 생성
-      // 이 참조를 통해 carts에 저장할 것이라고 위치를 지정
-      const cartRef = ref(database, "carts");
-      // firebase의 push 함수를 사용하여 장바구니에 추가한 제품을 데이터베이스에 추가
-      // push 함수는 제품 정보 객체를 'carts'경로에 추가함.
-      await push(cartRef, product);
-      
     } catch (error) {
-      console.log("에러가 발생하였습니다");
+      console.log("에러가 발생하였습니다", error);
     }
   };
 
@@ -113,7 +150,7 @@ export default function ProductDetail() {
                   : null}
               </select>
             </div>
-
+            {successMessage && <p>{successMessage}</p>}
             <button
               onClick={handleAddToCart}
               className="bg-pink-400 text-white mt-5 py-2 px-4 hover:brightness-110 transition-colors duration-300 ease-in-out"

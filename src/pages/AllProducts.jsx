@@ -8,13 +8,11 @@ export default function AllProducts() {
   const [products, setProducts] = useState({});
   const navigate = useNavigate();
 
-  //데이터 가져오기 로직
   useEffect(() => {
     const fetchData = async () => {
       try {
         // const productsRef = database.ref("products");
-        const productsRef = ref(database, "products"); // "products" 경로의 참조를 가져옵니다.
-        // 이미 초기화된 Firebase 데이터베이스를 사용합니다.
+        const productsRef = ref(database, "products");
         const snapshot = await get(productsRef);
 
         if (snapshot.exists()) {
