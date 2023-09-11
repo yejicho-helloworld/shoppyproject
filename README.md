@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+## 리액트로 진행하고 있는 쇼핑몰 프로젝트입니다. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Firebase Authentication 기능, Firebase Realtime Database 이용 
+<img width="1080" alt="image" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/d5970f1a-8b28-4e76-b0de-e78dc636713b">
 
-In the project directory, you can run:
+## Cloudinary 이용
+### 제품의 이미지를 클라우드로 업로드하고 저장
+<img width="1291" alt="스크린샷 2023-09-08 오후 8 18 24" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/daddb1c2-bb47-4b3e-ba25-e84cb90462ba">
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 메인페이지
+<img width="1142" alt="스크린샷 2023-09-08 오후 3 19 50" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/13b9504c-4f25-40e1-bf15-a9545809b958">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 로그인, 로그아웃 페이지
+### Firebase Authentication를 이용한 로그인, 로그아웃 기능
+<img width="801" alt="image" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/81734875-2e77-4723-83c8-2a667c144030">
 
-### `yarn test`
+ 
+## AllProducts 페이지
+<img width="1125" alt="image" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/7b0851bd-880e-4f64-87be-27e632fa4a44">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 제품 상세 페이지
+<img width="795" alt="image" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/a96982f0-eaba-4eaf-b149-893cf8ecb04d">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## 새로운 제품 등록 페이지
+<img width="1031" alt="image" src="https://github.com/yejicho-helloworld/shoppyproject/assets/71653816/9d610e91-9f03-4ace-b59e-36d4d9440d6e">
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
