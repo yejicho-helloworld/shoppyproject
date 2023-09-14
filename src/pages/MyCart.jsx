@@ -153,6 +153,12 @@ export default function MyCart() {
           </div>
         </div>
       )}
+      <button
+        type="submit"
+        className="font-bold bg-pink-400 hover:brightness-110 text-white rounded h-[3rem] w-4/5 px-5 mt-1 mb-5 ml-[9rem]"
+      >
+        주문하기
+      </button>
     </div>
   );
 }
