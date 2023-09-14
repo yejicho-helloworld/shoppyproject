@@ -106,14 +106,14 @@ export default function MyCart() {
               </div>
               <div className="w-1/2 flex justify-end">
                 <button
-                  className="border border-2 border-solid border-gray-500 px-1 py-1 mr-2"
+                  className="border hover:border-pink-400 hover:text-pink-400 border-2 border-solid border-gray-500 px-1 py-1 mr-2"
                   onClick={() => decreaseQuantity(item.id)}
                 >
                   <FaMinus />
                 </button>
                 <p>{item.quantity}</p>
                 <button
-                  className="border border-2 border-solid border-gray-500 px-1 py-1 ml-2"
+                  className="border hover:border-pink-400 hover:text-pink-400 border-2 border-solid border-gray-500 px-1 py-1 ml-2"
                   onClick={() => increaseQuantity(item.id)}
                 >
                   <FaPlus />
@@ -122,7 +122,7 @@ export default function MyCart() {
                   className="px-2 py-1 ml-2"
                   onClick={() => removeProduct(item.id)}
                 >
-                  <span className="text-xl">
+                  <span className="text-xl hover:text-pink-400">
                     <FaTrashAlt />
                   </span>
                 </button>
