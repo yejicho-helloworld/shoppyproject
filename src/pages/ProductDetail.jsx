@@ -92,7 +92,7 @@ export default function ProductDetail() {
           const newCartRef = push(cartRef);
           await set(newCartRef, productToAdd);
         }
-        setSuccessMessage("✅장바구니에 추가되었습니다");
+        setSuccessMessage("✅장바구니에 추가되었습니다!");
         setTimeout(() => {
           setSuccessMessage("");
         }, 3000); // 3초 후에 숨김

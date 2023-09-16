@@ -1,7 +1,7 @@
 import { get, ref, set } from "firebase/database";
 import { database } from "../firebase";
 import React, { useEffect, useState } from "react";
-import { FaPlus, FaMinus, FaTrash, FaTrashAlt } from "react-icons/fa";
+import { FaPlus, FaMinus, FaTrashAlt } from "react-icons/fa";
 
 // 이제 상품의 정보를 firebase로부터 받아와 장바구니에 보여주어야햠.
 
@@ -135,17 +135,17 @@ export default function MyCart() {
       {/* 총 가격 표시 */}
       {cart.length > 0 && (
         <div className="flex justify-center items-center m-[2rem]">
-          <div className="2xl:mx-[8rem] xl:mx-[5rem] md:mx-[2rem] sm:mx-[0.5rem] justify-start bg-gray-100 px-20 py-10">
+          <div className="2xl:mx-[8rem] xl:mx-[4rem] md:mx-[2rem] sm:mx-[0.5rem] justify-start bg-gray-100 px-20 py-10">
             <p className="text-xl font-semibold ml-2.5">상품 총액</p>
             <p className="text-xl text-pink-500 font-bold">₩{totalPrice}</p>
           </div>
           <FaPlus size="1rem" />
-          <div className="2xl:mx-[8rem] xl:mx-[5rem] md:mx-[2rem] sm:mx-[0.5rem] justify-center bg-gray-100 px-20 py-10">
+          <div className="2xl:mx-[8rem] xl:mx-[4rem] md:mx-[2rem] sm:mx-[0.5rem] justify-center bg-gray-100 px-20 py-10">
             <p className="text-xl font-semibold ml-3">배송비</p>
             <p className="text-xl text-pink-500 font-bold">₩3000</p>
           </div>
           <p className="text-3xl font-bold">=</p>
-          <div className="2xl:mx-[8rem] xl:mx-[5rem] md:mx-[2rem] sm:mx-[0.5rem] justify-end bg-gray-100 px-20 py-10">
+          <div className="2xl:mx-[8rem] xl:mx-[4rem] md:mx-[2rem] sm:mx-[0.5rem] justify-end bg-gray-100 px-20 py-10">
             <p className="text-xl font-semibold ml-4">총 가격</p>
             <p className="text-xl text-pink-500 font-bold">
               ₩{totalPrice + 3000}
